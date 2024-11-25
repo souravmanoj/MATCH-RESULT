@@ -348,7 +348,10 @@ Data Normalization: MaxAbsScaler
 scaler = MaxAbsScaler()
 
 # Fitting the scaler to the feature set X and transforming it to normalize the values
-X_normalized = scaler.fit_transform(X)  # X_normalized now contains the scaled feature values 
+X_normalized = scaler.fit_transform(X)  # X_normalized now contains the scaled feature values
+
+"Feature Selection: Mututal_Info_Classifier"
+
 # Calculating mutual information between the features and the target variable
 mutual_info = mutual_info_classif(X_normalized, y)
 
@@ -388,7 +391,9 @@ fig_after = POX.bar(feature_importance.head(15),
                    labels={'Feature': 'Features', 'Mutual Information': 'Mutual Information'},  # Axis labels
                    width=1000, height=600)  # Setting the width and height of the chart
 fig_after.update_layout(xaxis_tickangle=-90)  # Angling x-axis ticks for better readability
-fig_after.show()  # Displaying the chart
+fig_after.show()  # Displaying the chart 
+
+"DATA BALANCING ADAYSN"
 # Importing ADASYN from imblearn to handle class imbalance
 adasyn = ADASYN(random_state=42)
 
