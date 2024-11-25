@@ -348,4 +348,44 @@ Data Normalization: MaxAbsScaler
 scaler = MaxAbsScaler()
 
 # Fitting the scaler to the feature set X and transforming it to normalize the values
-X_normalized = scaler.fit_transform(X)  # X_normalized now contains the scaled feature values
+X_normalized = scaler.fit_transform(X)  # X_normalized now contains the scaled feature values 
+# Calculating mutual information between the features and the target variable
+mutual_info = mutual_info_classif(X_normalized, y)
+
+# Getting the names of the features
+feature_names = X.columns
+
+# Creating a DataFrame to store feature names and their corresponding mutual information scores
+feature_importance = pndas.DataFrame({'Feature': feature_names, 'Mutual Information': mutual_info})
+
+# Sorting the DataFrame based on mutual information scores in descending order
+feature_importance = feature_importance.sort_values('Mutual Information', ascending=False)
+
+# Creating a bar chart to visualize feature importance before feature selection
+fig_before = POX.bar(feature_importance,
+                    x='Feature',  # X-axis: feature names
+                    y='Mutual Information',  # Y-axis: mutual information scores
+                    title='Feature Importance Before Feature Selection',  # Title of the chart
+                    labels={'Feature': 'Features', 'Mutual Information': 'Mutual Information'},  # Axis labels
+                    width=1000, height=600)  # Setting the width and height of the chart
+fig_before.update_layout(xaxis_tickangle=-90)  # Angling x-axis ticks for better readability
+fig_before.show()  # Displaying the chart
+
+# Selecting the top 15 features based on mutual information scores
+top_15_features = feature_importance['Feature'][:15].tolist()
+
+# Creating a new DataFrame with only the top 15 features
+X_selected = X[top_15_features]
+
+# Normalizing the selected features
+X_selected_normalized = scaler.fit_transform(X_selected)
+
+# Creating a bar chart to visualize feature importance after feature selection (top 15 features)
+fig_after = POX.bar(feature_importance.head(15),
+                   x='Feature',  # X-axis: feature names
+                   y='Mutual Information',  # Y-axis: mutual information scores
+                   title='Feature Importance After Feature Selection (Top 15)',  # Title of the chart
+                   labels={'Feature': 'Features', 'Mutual Information': 'Mutual Information'},  # Axis labels
+                   width=1000, height=600)  # Setting the width and height of the chart
+fig_after.update_layout(xaxis_tickangle=-90)  # Angling x-axis ticks for better readability
+fig_after.show()  # Displaying the chart
