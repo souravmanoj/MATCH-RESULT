@@ -389,3 +389,14 @@ fig_after = POX.bar(feature_importance.head(15),
                    width=1000, height=600)  # Setting the width and height of the chart
 fig_after.update_layout(xaxis_tickangle=-90)  # Angling x-axis ticks for better readability
 fig_after.show()  # Displaying the chart
+# Importing ADASYN from imblearn to handle class imbalance
+adasyn = ADASYN(random_state=42)
+
+# Applying ADASYN to generate a resampled dataset with balanced classes
+X_resampled, y_resampled = adasyn.fit_resample(X_selected, y)
+
+# Printing the original dataset shape (class distribution)
+print("Original dataset shape:", y.value_counts())
+
+# Printing the resampled dataset shape (class distribution after applying ADASYN)
+print("Resampled dataset shape:", y_resampled.value_counts())
