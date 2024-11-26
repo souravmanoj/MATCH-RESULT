@@ -474,3 +474,25 @@ train_classification_report = classification_report(yTrainData, y_Stack_TrainSet
 
 # Printing the classification report for the training set
 print("Training Set Classification Report:\n", train_classification_report)
+"confusionMatric trainset mode"
+# Generating the confusion matrix for the training set predictions
+com_train = confusion_matrix(yTrainData, y_Stack_TrainSetPred)
+
+# Setting up the figure for the heatmap
+MtPlot.figure(figsize=(8, 6))
+# Creating a heatmap for the confusion matrix
+sBorn.heatmap(com_train,
+               annot=True,  # Annotate with the counts
+               fmt="d",  # Format the annotations as integers
+               cmap="cool",  # Colormap for the heatmap
+               cbar=False,  # Disable the color bar
+               linewidths=4.0,  # Width of lines separating the cells
+               linecolor='black')  # Color of the lines separating the cells
+
+# Adding titles and labels to the plot
+MtPlot.title("Confusion Matrix (Training Set)")  # Title of the plot
+MtPlot.xlabel("Predicted Labels")  # X-axis label
+MtPlot.ylabel("True Labels")  # Y-axis label
+
+# Displaying the confusion matrix heatmap
+MtPlot.show()
