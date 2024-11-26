@@ -407,3 +407,4 @@ print("Original dataset shape:", y.value_counts())
 print("Resampled dataset shape:", y_resampled.value_counts())
 "split data into test and train"
 XTrainData, XTestData, yTrainData, yTestData = train_test_split(X_resampled, y_resampled, test_size=0.2, random_state=42)
+"Applying model:Stacking Model"
