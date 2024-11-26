@@ -430,3 +430,25 @@ y_Stack_TrainSetPred = stacking_model.predict(XTrainData)
 
 # Predicting on the testset using the stackingmodel
 y_Stack_TestSetPred = stacking_model.predict(XTestData)
+"Train set Model"
+# Calculating the accuracy of the stacking model on the training set
+train_accuracy = accuracy_score(yTrainData, y_Stack_TrainSetPred)
+
+# Calculating the precision of the stacking model on the training set using macro averaging
+train_precision = precision_score(yTrainData, y_Stack_TrainSetPred, average='macro')
+
+# Calculating the recall of the stacking model on the training set using macro averaging
+train_recall = recall_score(yTrainData, y_Stack_TrainSetPred, average='macro')
+
+# Calculating the F1 score of the stacking model on the training set using macro averaging
+train_f1 = f1_score(yTrainData, y_Stack_TrainSetPred, average='macro')
+
+# Printing the evaluation metrics for the training set
+print("Training Set Metrics:")
+print("Accuracy :", train_accuracy)  # Displayingaccuracy
+
+print("Precision:", train_precision)  # Displayingprecision
+
+print("Recall   :", train_recall)  # Displayingrecall
+
+print("F1 Score :", train_f1)  # DisplayingF1score
