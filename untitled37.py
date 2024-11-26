@@ -533,4 +533,26 @@ MtPlot.title('Receiver Operating Characteristic (ROC) for Multi-Class')  # Title
 # Adding the legend for the plot
 MtPlot.legend(loc="lower right")
 # Displaying the ROC curves
-MtPlot.show()
+MtPlot.show
+"Test set Model"
+# Calculating accuracy for the test set predictions
+test_accuracy = accuracy_score(yTestData, y_Stack_TestSetPred)
+
+# Calculating precision for the test set predictions
+test_precision = precision_score(yTestData, y_Stack_TestSetPred, average='macro')
+
+# Calculating recall for the test set predictions
+test_recall = recall_score(yTestData, y_Stack_TestSetPred, average='macro')
+
+# Calculating F1 score for the test set predictions
+test_f1 = f1_score(yTestData, y_Stack_TestSetPred, average='macro')
+
+# Printing the evaluation metrics for the testset
+print("Test Set Metrics:")
+print("Accuracy :", test_accuracy)  # Displayingaccuracy
+
+print("Precision:", test_precision)  # Displayingprecision
+
+print("Recall   :", test_recall)  # Displayingrecall
+
+print("F1 Score :", test_f1)  # DisplayingF1score
