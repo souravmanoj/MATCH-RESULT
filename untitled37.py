@@ -496,3 +496,41 @@ MtPlot.ylabel("True Labels")  # Y-axis label
 
 # Displaying the confusion matrix heatmap
 MtPlot.show()
+"ROC_AUC-Curve of TrainSetModel"
+# Binarizing the true labels for multi-class ROC analysis
+yTrainData_bin = label_binarize(yTrainData, classes=[0, 1, 2])
+# Binarizing the predicted labels for multi-class ROC analysis
+y_Stack_TrainSetPred_bin = label_binarize(y_Stack_TrainSetPred, classes=[0, 1, 2])
+
+# Initializing dictionaries to store false positive rates, true positive rates, and ROC AUC values
+fpr = dict()
+tpr = dict()
+roc_auc = dict()
+n_classes = yTrainData_bin.shape[1]  # Number of classes
+
+# Calculating the ROC curve and AUC for each class
+for i in range(n_classes):
+    fpr[i], tpr[i], _ = roc_curve(yTrainData_bin[:, i], y_Stack_TrainSetPred_bin[:, i])
+    roc_auc[i] = auc(fpr[i], tpr[i])
+
+# Setting up the figure for the ROC curves
+MtPlot.figure()
+lw = 2  # Line width for the curves
+colors = cycle(['aqua', 'violet', 'brown'])  # Colors for the ROC curves
+
+# Plotting the ROC curve for each class
+for i, color in zip(range(n_classes), colors):
+    MtPlot.plot(fpr[i], tpr[i], color=color, lw=lw,
+                label='ROC curve of class {0} (area = {1:0.2f})'
+                      ''.format(i, roc_auc[i]))
+
+# Adding a dashed line representing the chance level
+MtPlot.plot([0, 1], [0, 1], 'k--', lw=lw)
+# Adding labels and title to the plot
+MtPlot.xlabel('False Positive Rate')  # X-axis label
+MtPlot.ylabel('True Positive Rate')  # Y-axis label
+MtPlot.title('Receiver Operating Characteristic (ROC) for Multi-Class')  # Title of the plot
+# Adding the legend for the plot
+MtPlot.legend(loc="lower right")
+# Displaying the ROC curves
+MtPlot.show()
