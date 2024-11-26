@@ -452,3 +452,19 @@ print("Precision:", train_precision)  # Displayingprecision
 print("Recall   :", train_recall)  # Displayingrecall
 
 print("F1 Score :", train_f1)  # DisplayingF1score
+"Accuracy of train set model class0 claas 1 class2"
+# Defining a function to calculate the accuracy for a specific class
+def class_accuracy(y_true, y_pred, class_label):
+    # Getting the indices of the true labels that match the specified class label
+    class_indices = (y_true == class_label)
+    # Returning the accuracy score for the predictions corresponding to that class
+    return accuracy_score(y_true[class_indices], y_pred[class_indices])
+
+# Printing training set metrics
+print("Training Set Metrics:")
+# Looping through each class label to calculate and print class-specific accuracy
+for class_label in [0, 1, 2]:
+    # Calculating accuracy for the current class label
+    train_class_acc = class_accuracy(yTrainData, y_Stack_TrainSetPred, class_label)
+    # Printing the accuracy for the current class
+    print(f"Accuracy for Class {class_label}: {train_class_acc:.4f}")
