@@ -408,3 +408,25 @@ print("Resampled dataset shape:", y_resampled.value_counts())
 "split data into test and train"
 XTrainData, XTestData, yTrainData, yTestData = train_test_split(X_resampled, y_resampled, test_size=0.2, random_state=42)
 "Applying model:Stacking Model"
+# Importing necessaryclassifiers for the StackingModel
+model1 = LogisticRegression()  # LogisticRegressionModel
+model2 = RandomForestClassifier()  # RandomForestModel
+model3 = GradientBoostingClassifier()  # GradientBoostingModel
+
+# Defining the metamodel for stacking
+meta_model = LogisticRegression()  # Metamodel for the finalPredictions
+
+# Creating a StackingClassifier using the definedmodels
+stacking_model = StackingClassifier(
+    estimators=[('lr', model1), ('rf', model2), ('gb', model3)],  # Basemodels
+    final_estimator=meta_model  # Metamodel
+)
+
+# Fitting the stackingmodel on the training data
+stacking_model.fit(XTrainData, yTrainData)
+
+# Predicting on the trainingset using the stackingmodel
+y_Stack_TrainSetPred = stacking_model.predict(XTrainData)
+
+# Predicting on the testset using the stackingmodel
+y_Stack_TestSetPred = stacking_model.predict(XTestData)
