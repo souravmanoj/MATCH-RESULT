@@ -468,3 +468,9 @@ for class_label in [0, 1, 2]:
     train_class_acc = class_accuracy(yTrainData, y_Stack_TrainSetPred, class_label)
     # Printing the accuracy for the current class
     print(f"Accuracy for Class {class_label}: {train_class_acc:.4f}")
+    "classification Reports train set model"
+    # Generating a classification report for the training set predictions
+train_classification_report = classification_report(yTrainData, y_Stack_TrainSetPred)
+
+# Printing the classification report for the training set
+print("Training Set Classification Report:\n", train_classification_report)
