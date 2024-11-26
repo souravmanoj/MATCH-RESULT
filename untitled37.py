@@ -405,3 +405,4 @@ print("Original dataset shape:", y.value_counts())
 
 # Printing the resampled dataset shape (class distribution after applying ADASYN)
 print("Resampled dataset shape:", y_resampled.value_counts())
+"split data into test and train"
