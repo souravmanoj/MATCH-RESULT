@@ -563,3 +563,8 @@ for class_label in [0, 1, 2]:
     test_class_acc = class_accuracy(yTestData, y_Stack_TestSetPred, class_label)
     # Printing the accuracy for the current class
     print(f"Test Set Accuracy for Class {class_label}: {test_class_acc:.4f}")
+    "classification report of test model"
+    # Generating a classificationreport for the test set predictions
+report = classification_report(yTestData, y_Stack_TestSetPred)
+# Printing the classificationreport
+print("Classification Report:\n", report)
