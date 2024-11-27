@@ -556,3 +556,10 @@ print("Precision:", test_precision)  # Displayingprecision
 print("Recall   :", test_recall)  # Displayingrecall
 
 print("F1 Score :", test_f1)  # DisplayingF1score
+"Accuracy_of_TestSetModel = Class 0, Class 1, Class 2"
+# Evaluating the accuracy for each class in the test set
+for class_label in [0, 1, 2]:
+    # Calculating the accuracy for the specified class label
+    test_class_acc = class_accuracy(yTestData, y_Stack_TestSetPred, class_label)
+    # Printing the accuracy for the current class
+    print(f"Test Set Accuracy for Class {class_label}: {test_class_acc:.4f}")
