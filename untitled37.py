@@ -568,3 +568,17 @@ for class_label in [0, 1, 2]:
 report = classification_report(yTestData, y_Stack_TestSetPred)
 # Printing the classificationreport
 print("Classification Report:\n", report)
+"confusion matrix test model"
+# Creating a confusionmatrix for the testset predictions
+confm = confusion_matrix(yTestData, y_Stack_TestSetPred)
+
+# Setting the figure size for the confusionmatrix plot
+MtPlot.figure(figsize=(8, 6))
+# Plotting the heatmap of the confusionmatrix with annotations
+sBorn.heatmap(confm, annot=True, fmt="d", cmap="cool", cbar=False, linewidths=4.0, linecolor='black')
+
+# Adding titles and labels to the plot
+MtPlot.title('Confusion Matrix')
+MtPlot.xlabel('Predicted Label')
+MtPlot.ylabel('True Label')
+MtPlot.show()
