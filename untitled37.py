@@ -581,4 +581,69 @@ sBorn.heatmap(confm, annot=True, fmt="d", cmap="cool", cbar=False, linewidths=4.
 MtPlot.title('Confusion Matrix')
 MtPlot.xlabel('Predicted Label')
 MtPlot.ylabel('True Label')
+MtPlot.show
+"Roc_Auc curve of test set model"
+# Binarizing the test data and predictions for multi-class ROC analysis
+yTestData_bin = label_binarize(yTestData, classes=[0, 1, 2])
+y_Stack_TestSetPred_bin = label_binarize(y_Stack_TestSetPred, classes=[0, 1, 2])
+
+# Initializing dictionaries to store false positive rates, true positive rates, and AUC values
+fpr = dict()
+tpr = dict()
+roc_auc = dict()
+n_classes = yTestData_bin.shape[1]  # Number of classes
+
+# Calculating the ROC curve and AUC for each class
+for i in range(n_classes):
+    fpr[i], tpr[i], _ = roc_curve(yTestData_bin[:, i], y_Stack_TestSetPred_bin[:, i])
+    roc_auc[i] = auc(fpr[i], tpr[i])
+
+# Creating a new figure for the ROC plot
+MtPlot.figure()
+lw = 2  # Line width for the plot
+# Defining colors for the different classes
+colors = cycle(['aqua', 'darkorange', 'cornflowerblue'])
+
+# Plotting the ROC curve for each class
+for i, color in zip(range(n_classes), colors):
+    MtPlot.plot(fpr[i], tpr[i], color=color, lw=lw,
+             label='ROC curve of class {0} (area = {1:0.2f})'
+             ''.format(i, roc_auc[i]))
+
+# Adding the diagonal line (no discrimination line)
+MtPlot.plot([0, 1], [0, 1], 'k--', lw=lw)
+
+# Adding labels and title to the plot
+MtPlot.xlabel('False Positive Rate')
+MtPlot.ylabel('True Positive Rate')
+MtPlot.title('ReceiverOperatingCharacteristic(ROC) for MultiClass')
+MtPlot.legend(loc="lower right")
 MtPlot.show()
+"Model result comparision trainset and testset"
+# Define metrics and their respective values for training and testsets
+metrics = ['Accuracy', 'Precision', 'Recall', 'F1 Score']
+train_values = [train_accuracy, train_precision, train_recall, train_f1]
+test_values = [test_accuracy, test_precision, test_recall, test_f1]
+
+# Create a grouped bar chart
+fig = go.Figure(data=[
+    go.Bar(name='Training Set', x=metrics, y=train_values,
+           text=[f'{v:.4f}' for v in train_values],
+           textposition='outside'),
+    go.Bar(name='Test Set', x=metrics, y=test_values,
+           text=[f'{v:.4f}' for v in test_values],
+           textposition='outside')
+])
+
+# Update the layout for the figure
+fig.update_layout(
+    barmode='group',
+    title='Comparison of Model Performance (Training vs. Test)',
+    xaxis_title='Metrics',
+    yaxis_title='Score',
+    width=1000,
+    height=600
+)
+
+# Display the figure
+fig.show()
